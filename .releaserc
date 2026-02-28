@@ -1,0 +1,58 @@
+{
+  "branches": [
+    "main"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": true
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "dist/*.tgz",
+            "label": "Distribution Tarball"
+          },
+          {
+            "path": "CHANGELOG.md",
+            "label": "Changelog"
+          },
+          {
+            "path": "**/*.ts",
+            "label": "Source: TypeScript Files"
+          },
+          {
+            "path": "**/*.js",
+            "label": "Source: JavaScript Files"
+          },
+          {
+            "path": "**/*.json",
+            "label": "Source: JSON Files"
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "package.json",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ]
+}

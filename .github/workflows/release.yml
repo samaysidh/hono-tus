@@ -44,7 +44,7 @@ jobs:
       # === Install semantic-release tooling in CI only ===
       - name: Install semantic-release CLI + plugins
         run: |
-          npm install --location=global semantic-release \
+          bun install -g semantic-release \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             @semantic-release/changelog \
