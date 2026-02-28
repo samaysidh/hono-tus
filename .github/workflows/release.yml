@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: write # for creating GitHub Releases & tags
+  id-token: write # for npm OIDC trusted publishing
+  packages: write # for npm publish
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # needed for semantic-release to see full git history
+
+      # === Setup Bun for build & test ===
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache Bun modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.bun/install/cache
+          key: bun-cache-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: bun-cache-
+
+      - name: Install dependencies with Bun
+        run: bun install --frozen-lockfile
+        env:
+          HUSKY: 0
+
+      - name: Run tests
+        run: bun test
+
+      - name: Build
+        run: bun run build
+
+      # === Install semantic-release tooling in CI only ===
+      - name: Install semantic-release CLI + plugins
+        run: |
+          npm install --location=global semantic-release \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            @semantic-release/changelog \
+            @semantic-release/github \
+            @semantic-release/npm \
+            @semantic-release/git
+
+      # === Run semantic-release ===
+      - name: Run semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: semantic-release

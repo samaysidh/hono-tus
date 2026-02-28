@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# This regex enforces <type>(optional scope): description
+PATTERN='^(feat|fix|docs|style|refactor|test|build|ci|chore|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?:\s.+$'
+
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+  echo "ERROR: Invalid commit message format!"
+  echo "Expected Conventional Commits format:"
+  echo "<type>[optional scope]: <description>"
+  echo "Valid types: feat, fix, docs, style, refactor, test, build, ci, chore, perf, revert"
+  exit 1
+fi
+
+exit 0
