@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/samaysidh/hono-tus/compare/v1.0.0...v1.0.1) (2026-02-28)
+
+
+### Bug Fixes
+
+* fixed a bug of releasing source files ([5e07cdf](https://github.com/samaysidh/hono-tus/commit/5e07cdf730887bef0fecc2d69911f39df6575b96))
+
 # 1.0.0 (2026-02-28)
 
 
