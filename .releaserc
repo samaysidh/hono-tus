@@ -28,18 +28,6 @@
           {
             "path": "CHANGELOG.md",
             "label": "Changelog"
-          },
-          {
-            "path": "**/*.ts",
-            "label": "Source: TypeScript Files"
-          },
-          {
-            "path": "**/*.js",
-            "label": "Source: JavaScript Files"
-          },
-          {
-            "path": "**/*.json",
-            "label": "Source: JSON Files"
           }
         ]
       }
